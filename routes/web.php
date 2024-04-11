@@ -22,7 +22,7 @@ Route::get('/', function() {
 
 Route::get('/tasks', function() { // this route to show all tasks from index file.
     return view('index',[
-        'tasks' => Task::latest()->get() // passing the tasks to the index file to render it there.
+        'tasks' => Task::latest()->paginate(10) // passing the tasks to the index file to render it there.
     ]);
 })->name('tasks.index');
 
