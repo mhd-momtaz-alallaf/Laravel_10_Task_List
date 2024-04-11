@@ -70,7 +70,7 @@ Route::put('/tasks/{task}',function(Task $task, TaskRequest $request){ // this r
     $task->update($request->validated()); // simple way to update an existing instance of Task (from Task Model Binding) and auto save it.
     
     return redirect()->route('tasks.show', ['task' => $task->id])
-        ->with('success', 'Task edited successfully!');
+        ->with('success', 'Task updated successfully!');
 })->name('tasks.update');
 
 Route::delete('/tasks/{task}',function(Task $task){
@@ -78,3 +78,12 @@ Route::delete('/tasks/{task}',function(Task $task){
 
     return redirect()->route('tasks.index')->with('success','Task deleted successfully!');
 })->name('tasks.destroy');
+
+
+// allways use "put" or "delete" or "post" verbs with a forms in the layout whene we want to change something or delete or modify somthing in the database (but we never use "get" verb with a normal link for security reasons)
+
+Route::put('/tasks/{task}/toggle-complete',function(Task $task){
+    $task->toggleComplete();
+
+    return redirect()->back()->with('success', 'Task updated successfully!');
+})->name('tasks.toggle-complete');

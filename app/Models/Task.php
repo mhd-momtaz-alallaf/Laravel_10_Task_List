@@ -11,4 +11,12 @@ class Task extends Model
 
     // here we have to use all of the fields that will changh by mass assinment for security resones.
     protected $fillable = ['title', 'description','long_description'];
+
+
+    // it's a good practice to add methods into the model.
+    public function toggleComplete()
+    {
+        $this->completed = !$this->completed;
+        $this->save();
+    }
 }
