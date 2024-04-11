@@ -33,7 +33,12 @@
     <h1 class="mb-4 text-2xl">@yield('title')</h1>
     <div>
         @if (session()->has('success'))
-            <div>{{ session('success') }}</div>
+            <div x-show="flash"
+                class="relative mb-10 rounded border border-green-400 bg-green-100 px-4 py-3 text-lg text-green-700"
+                role="alert">
+                <strong class="font-bold">Success!</strong>
+                <div>{{ session('success') }}</div>
+            </div>
         @endif
 
         @yield('content')
