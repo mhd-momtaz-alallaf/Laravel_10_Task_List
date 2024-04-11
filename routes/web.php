@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Requests\TaskRequest;
 use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Http\Requests\TaskRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +24,7 @@ Route::get('/tasks', function() { // this route to show all tasks from index fil
     return view('index',[
         'tasks' => Task::latest()->get() // passing the tasks to the index file to render it there.
     ]);
-})->name('/tasks.index');
+})->name('tasks.index');
 
 Route::view('/tasks/create','create') // this route to open the create form page.
     ->name('tasks.create');
@@ -72,5 +70,11 @@ Route::put('/tasks/{task}',function(Task $task, TaskRequest $request){ // this r
     $task->update($request->validated()); // simple way to update an existing instance of Task (from Task Model Binding) and auto save it.
     
     return redirect()->route('tasks.show', ['task' => $task->id])
-        ->with('success', 'Task edited successfully!');;
+        ->with('success', 'Task edited successfully!');
 })->name('tasks.update');
+
+Route::delete('/tasks/{task}',function(Task $task){
+    $task->delete();
+
+    return redirect()->route('tasks.index')->with('success','Task deleted successfully!');
+})->name('tasks.destroy');
