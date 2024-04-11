@@ -8,10 +8,10 @@
 </head>
 
 <body class="container mx-auto mt-10 mb-10 max-w-lg">
-    <h1>@yield('title')</h1>
+    <h1 class="mb-4 text-2xl">@yield('title')</h1>
     <div>
         @if (session()->has('success'))
-        <div>{{ session('success') }}</div>
+            <div>{{ session('success') }}</div>
         @endif
 
         @yield('content')
