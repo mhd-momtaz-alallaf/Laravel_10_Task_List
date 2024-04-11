@@ -4,44 +4,45 @@
 
 @section('content')
 
-    <p>{{ $task->description }}</p>
+    <div class="mb-4">
+        <a href="{{route('tasks.index')}}" 
+        class="link"><- Go Back to the Tasks List!</a>
+    </div>
+
+    <p class="mb-4 text-slate-700">{{ $task->description }}</p>
 
     @if ($task->long_description)
-    <p>{{ $task->long_description }}</p>
+    <p class="mb-4 text-slate-700">{{ $task->long_description }}</p>
     @endif
 
-    <p>{{ $task->created_at }}</p>
-    <p>{{ $task->updated_at }}</p>
+    <p class="mb-4 text-sm text-slate-500"> Created: {{ $task->created_at->diffForHumans() }} | Updated: {{ $task->updated_at->diffForHumans() }}</p>
 
-    <p>
+    <p class="mb-4">
         @if($task->completed)
-        Completed
+            <span class="font-medium text-green-500">Completed</span>
         @else
-        Not Completed
+            <span class="font-medium text-red-500">Not Completed</span>
         @endif
     </p>
 
 
-    <div>
-        <a href="{{ route('tasks.edit', ['task' => $task] ) }}">Edit</a>
-    </div> <!-- we can just pass the whole Model like this: ['task' => $task] inested of pass =>$task->id and laravel will know that there are a primary key to use as an $id -->
+    <div class="flex gap-2">
+        <a href="{{ route('tasks.edit', ['task' => $task] ) }}" class="btn">Edit</a>
+        <!-- we can just pass the whole Model like this: ['task' => $task] inested of pass =>$task->id and laravel will know that there are a primary key to use as an $id -->
 
-    <div>
         <form action="{{route('tasks.toggle-complete',['task' => $task] )}}" method="POST">
             @csrf
             @method('PUT')
-            <button type="submit">
+            <button type="submit" class="btn">
                 Mark As {{ $task->completed ? 'Not Completed' : 'Completed' }}
             </button>
         </form>
-    </div>
-
-    <div>
+    
         <form action="{{route('tasks.destroy',['task' => $task] )}}" method="POST">
             @csrf
             <!-- Method Spoofing -->
             @method('DELETE')
-            <button type="submit">Delete</button>
+            <button type="submit" class="btn">Delete</button>
         </form>
     </div>
 
